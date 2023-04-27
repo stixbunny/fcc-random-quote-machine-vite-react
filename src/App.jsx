@@ -1,6 +1,3 @@
-import { useState } from 'react'
-//import reactLogo from './assets/react.svg'
-//import viteLogo from '/vite.svg'
 import './App.css'
 import { Button, Col, Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,6 +5,7 @@ import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faTumblr } from '@fortawesome/free-brands-svg-icons'
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons'
 import { faQuoteRight } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
 
 function MainCard({ children }) {
   const cardClasses = 'justify-content-center m-2 m-sm-auto bg-light p-3 rounded'
@@ -16,6 +14,10 @@ function MainCard({ children }) {
       {children}
     </Col>
   )
+}
+
+MainCard.propTypes = {
+  children: PropTypes.node.isRequired
 }
 
 function Quote() {
@@ -76,7 +78,7 @@ function Buttons() {
   )
 }
 
-function App() {
+export default function App() {
   return (
     <div id='background' className='d-flex align-items-center min-vw-100 min-vh-100'>
       <Container>
@@ -91,34 +93,3 @@ function App() {
     </div>
   )
 }
-
-/* function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-} */
-
-export default App
