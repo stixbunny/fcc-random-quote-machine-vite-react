@@ -21,37 +21,18 @@ MainCard.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-function Quote() {
-  const quoteClasses = "fs-3 fw-bold text-center mb-2"
-  const [quote, setQuote] = useState([]);
-  const [author, setAuthor] = useState([]);
-  const getQuote = () => {
-    fetch('https://api.quotable.io/quotes/random')
-      .then(response => response.json())
-      .then(quoteList => {
-        console.log(quoteList)
-        let quoteResult = quoteList[0].content
-        let authorResult = quoteList[0].author
-        setQuote(quoteResult);
-        setAuthor(authorResult);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-      setQuote("");
-      setAuthor("");
-  }
-  useEffect(getQuote, []);
+function Quote(props) {
+  //useEffect(props.getQuote);
   function Author() {
     return (
-      <div id='author' className='text-end mb-3'>- {author}</div>
+      <div id='author' className='text-end mb-3'>- {props.author}</div>
     )
   }
   return (
     <>
-      <div id="text" className={quoteClasses}>
+      <div id="text" className="fs-3 fw-bold text-center mb-2">
         <FontAwesomeIcon icon={faQuoteLeft}/>
-        {quote}
+        {props.quote}
         <FontAwesomeIcon icon={faQuoteRight}/>
       </div>
       <Author />
@@ -59,7 +40,7 @@ function Quote() {
   )
 }
 
-function Buttons() {
+function Buttons(props) {
   const displayClasses = 'd-flex text-center align-items-center'
   return (
     <div id="socialButtons" className={displayClasses}>
@@ -76,22 +57,41 @@ function Buttons() {
         </div>
       </div>
       <div className='ms-auto'>
-        <Button id='new-quote' >New Quote</Button>
+        <Button id='new-quote' onClick={props.getQuote} >New Quote</Button>
       </div>
     </div>
   )
 }
 
 export default function App() {
+  const [quote, setQuote] = useState([]);
+  const [author, setAuthor] = useState([]);
+  function getQuote() {
+    fetch('https://api.quotable.io/quotes/random')
+      .then(response => response.json())
+      .then(quoteList => {
+        console.log(quoteList)
+        let quoteResult = quoteList[0].content
+        let authorResult = quoteList[0].author
+        setQuote(quoteResult);
+        setAuthor(authorResult);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      setQuote("");
+      setAuthor("");
+  }
+  useEffect(getQuote, [])
   return (
     <div id='background' className='d-flex align-items-center min-vw-100 min-vh-100'>
       <Container>
         <MainCard>
-          <Quote />
-          <Buttons />
+          <Quote quote={quote} author={author} />
+          <Buttons getQuote={getQuote} />
         </MainCard>
         <div id="me" className="mt-4 text-center">by <a href="https://github.com/stixbunny" target="_blank" rel="noreferrer">stixbunny</a></div>
-        <div id="credit" className="mt-3 text-center">Inspirational quotes provided by <a href="https://zenquotes.io/" target="_blank" rel="noreferrer">ZenQuotes API</a></div>
+        <div id="credit" className="mt-3 text-center">Random quotes provided by <a href="https://github.com/lukePeavey/quotable" target="_blank" rel="noreferrer">Quotable</a></div>
       </Container>
     </div>
   )
