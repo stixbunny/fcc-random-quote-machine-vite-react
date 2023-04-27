@@ -40,7 +40,11 @@ function Author() {
 const getQuote = () => {
   let author = ""
   let quote = ""
-  fetch("https://zenquotes.io/api/random")
+  fetch("https://zenquotes.io/api/random",
+    {headers: {
+      'Access-Control-Allow-Origin' : '*',
+      'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    }})
     .then(response => response.text())
     .then(quoteList => {
       console.log(quoteList)
