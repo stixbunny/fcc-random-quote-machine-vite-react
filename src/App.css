@@ -1,0 +1,27 @@
+#background, .btn-primary {
+	background-color: green;
+}
+
+#text, #author {
+	color: green;
+}
+
+.btn-primary:hover {
+  background-color: darkgreen;
+}
+
+.btn-primary {
+	border: none;
+}
+
+#me, #me > a {
+	color: white;
+	text-decoration: none;
+	font-size: 0.8rem
+}
+
+#credit, #credit > a {
+	color: lightgrey;
+	text-decoration: none;
+	font-size: 0.7rem
+}
