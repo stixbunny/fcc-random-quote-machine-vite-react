@@ -6,6 +6,7 @@ import { faTumblr } from '@fortawesome/free-brands-svg-icons'
 import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons'
 import { faQuoteRight } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
+import { useState, useEffect } from 'react'
 
 function MainCard({ children }) {
   const cardClasses = 'justify-content-center m-2 m-sm-auto bg-light p-3 rounded'
@@ -22,41 +23,40 @@ MainCard.propTypes = {
 
 function Quote() {
   const quoteClasses = "fs-3 fw-bold text-center mb-2"
+  const [quote, setQuote] = useState([]);
+  const [author, setAuthor] = useState([]);
+  const getQuote = () => {
+    fetch('https://api.quotable.io/quotes/random')
+      .then(response => response.json())
+      .then(quoteList => {
+        console.log(quoteList)
+        let quoteResult = quoteList[0].content
+        let authorResult = quoteList[0].author
+        setQuote(quoteResult);
+        setAuthor(authorResult);
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      setQuote("");
+      setAuthor("");
+  }
+  useEffect(getQuote, []);
+  function Author() {
+    return (
+      <div id='author' className='text-end mb-3'>- {author}</div>
+    )
+  }
   return (
-    <div id="text" className={quoteClasses}>
-      <FontAwesomeIcon icon={faQuoteLeft}/>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eros neque, rutrum vel nisi consectetur, hendrerit feugiat velit.
-      <FontAwesomeIcon icon={faQuoteRight}/>
-    </div>
+    <>
+      <div id="text" className={quoteClasses}>
+        <FontAwesomeIcon icon={faQuoteLeft}/>
+        {quote}
+        <FontAwesomeIcon icon={faQuoteRight}/>
+      </div>
+      <Author />
+    </>
   )
-}
-
-function Author() {
-  return (
-    <div id='author' className='text-end mb-3'>- Author</div>
-  )
-}
-
-const getQuote = () => {
-  let author = ""
-  let quote = ""
-  fetch("https://zenquotes.io/api/random",
-    {headers: {
-      'Access-Control-Allow-Origin' : '*',
-      'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    }})
-    .then(response => response.text())
-    .then(quoteList => {
-      console.log(quoteList)
-      quote = quoteList[0].q
-      author = quoteList[0].a
-      console.log(`quote= ${quote} author= ${author}`)
-      return [quote, author]
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-    return ["", ""]
 }
 
 function Buttons() {
@@ -76,7 +76,7 @@ function Buttons() {
         </div>
       </div>
       <div className='ms-auto'>
-        <Button id='new-quote' onClick={getQuote}>New Quote</Button>
+        <Button id='new-quote' >New Quote</Button>
       </div>
     </div>
   )
@@ -88,7 +88,6 @@ export default function App() {
       <Container>
         <MainCard>
           <Quote />
-          <Author />
           <Buttons />
         </MainCard>
         <div id="me" className="mt-4 text-center">by <a href="https://github.com/stixbunny" target="_blank" rel="noreferrer">stixbunny</a></div>
