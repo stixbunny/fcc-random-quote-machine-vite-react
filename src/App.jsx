@@ -47,10 +47,6 @@ function Buttons(props) {
     const url = "http://twitter.com/intent/tweet?text=" + post
     window.open(url, '_blank').focus()
   }
-  const tumblrPost = () => {
-    const url = "https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes,stixbunny&caption=" + props.author + "&content=" + props.quote
-    window.open(url, '_blank').focus()
-  }
   return (
     <div id="socialButtons" className={displayClasses}>
       <div id="socialButtons" className='d-flex gap-3'>
@@ -60,7 +56,7 @@ function Buttons(props) {
           </a>
         </div>
         <div className='btn btn-primary'>
-          <a id='tumblr-quote' role='button' className='tumblr-share-button' href="https://www.tumblr.com/share">
+          <a id='tumblr-quote' role='button' target="_blank" rel='noreferrer' href={`https://www.tumblr.com/widgets/share/tool?shareSource=legacy&canonicalUrl=www.google.cl&posttype=quote&content=${props.quote}&caption=${props.author}&tags=quote,stixbunny&show-via=Random Quote Generator`}>
             <FontAwesomeIcon icon={faTumblr} fixedWidth />
           </a>
         </div>

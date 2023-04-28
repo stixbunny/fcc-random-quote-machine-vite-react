@@ -14,6 +14,10 @@
 	border: none;
 }
 
+#tumblr-quote {
+	color: white;
+}
+
 #me, #me > a {
 	color: white;
 	text-decoration: none;
