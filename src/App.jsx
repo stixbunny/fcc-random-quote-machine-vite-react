@@ -84,8 +84,8 @@ export default function App() {
       .catch((err) => {
         console.log(err)
       })
-      setQuote("");
-      setAuthor("");
+      const availableColors = ["yellowgreen", "steelblue", "slateblue", "skyblue", "salmon", "plum", "peru", "olive", "mediumseagreen", "lightseagreen", "lightpink", "honeydew", "deeppink", "coral"]
+      document.documentElement.style.setProperty('--base', availableColors[Math.floor((Math.random()*availableColors.length))]);
   }
   useEffect(getQuote, [])
   return (

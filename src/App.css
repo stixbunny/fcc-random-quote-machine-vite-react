@@ -1,13 +1,17 @@
+:root {
+	--base: green;
+}
+
 #background, .btn-primary {
-	background-color: green;
+	background-color: var(--base);
 }
 
 #text, #author {
-	color: green;
+	color: var(--base);
 }
 
 .btn-primary:hover {
-  background-color: darkgreen;
+  background-color: dimgray;
 }
 
 .btn-primary {
