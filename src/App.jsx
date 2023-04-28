@@ -42,16 +42,25 @@ function Quote(props) {
 
 function Buttons(props) {
   const displayClasses = 'd-flex text-center align-items-center'
+  const twitterPost = () => {
+    const post = `"${props.quote}" - ${props.author}`
+    const url = "http://twitter.com/intent/tweet?text=" + post
+    window.open(url, '_blank').focus()
+  }
+  const tumblrPost = () => {
+    const url = "https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes,stixbunny&caption=" + props.author + "&content=" + props.quote
+    window.open(url, '_blank').focus()
+  }
   return (
     <div id="socialButtons" className={displayClasses}>
       <div id="socialButtons" className='d-flex gap-3'>
         <div className='btn btn-primary'>
-          <a id='tweet-quote' role='button'>
+          <a id='tweet-quote' onClick={twitterPost} role='button'>
             <FontAwesomeIcon icon={faTwitter} fixedWidth />
           </a>
         </div>
         <div className='btn btn-primary'>
-          <a id='tumblr-quote' role='button'>
+          <a id='tumblr-quote' role='button' className='tumblr-share-button' href="https://www.tumblr.com/share">
             <FontAwesomeIcon icon={faTumblr} fixedWidth />
           </a>
         </div>
@@ -88,7 +97,7 @@ export default function App() {
       <Container>
         <MainCard>
           <Quote quote={quote} author={author} />
-          <Buttons getQuote={getQuote} />
+          <Buttons getQuote={getQuote} quote={quote} author={author} />
         </MainCard>
         <div id="me" className="mt-4 text-center">by <a href="https://github.com/stixbunny" target="_blank" rel="noreferrer">stixbunny</a></div>
         <div id="credit" className="mt-3 text-center">Random quotes provided by <a href="https://github.com/lukePeavey/quotable" target="_blank" rel="noreferrer">Quotable</a></div>
